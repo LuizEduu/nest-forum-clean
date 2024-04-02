@@ -60,3 +60,7 @@ data
 
 #Env
 .env
+
+#keys
+chave_privada.pem
+chave_publica.pem
