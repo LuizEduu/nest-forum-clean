@@ -4,7 +4,7 @@ import { PrismaService } from './prima/prisma.service'
 import { envSchema } from './env'
 import { AuthModule } from './auth/auth.module'
 import { CreateAccountController } from './controllers/create-account.controller'
-import { SessionsAuthenticateController } from './controllers/authenticate-controller'
+import { SessionsAuthenticateController } from './controllers/authenticate.controller'
 
 @Module({
   // importar outros modulos
