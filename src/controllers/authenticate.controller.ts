@@ -28,13 +28,13 @@ export class SessionsAuthenticateController {
     })
 
     if (!user) {
-      throw new UnauthorizedException('User credentials do not match.')
+      throw new UnauthorizedException('User credentials does not match.')
     }
 
     const isPasswordValid = await compare(password, user.password)
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('User credentials do not match.')
+      throw new UnauthorizedException('User credentials does not match.')
     }
 
     const accessToken = this.jwt.sign({ sub: user.id })
