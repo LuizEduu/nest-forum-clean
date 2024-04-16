@@ -8,7 +8,9 @@ import { Answer } from '../../enterprise/entities/answer'
 import { AnswerAttachment } from '../../enterprise/entities/answer-attachment'
 import { right } from '@/core/either'
 import { AnswerAttachmentList } from '../../enterprise/entities/answer-attachment-list'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class AnswerQuestionUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
 

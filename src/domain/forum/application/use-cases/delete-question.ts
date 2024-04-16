@@ -1,10 +1,12 @@
 import { DeleteQuestionUseCaseRequestDTO } from './dto'
 import { QuestionsRepository } from '../repositories/questions-repository'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { DeleteQuestionUseCaseResponseDTO } from './dto/delete-question-response'
 import { left, right } from '@/core/either'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class DeleteQuestionUseCase {
   constructor(private readonly questionsRepository: QuestionsRepository) {}
 

@@ -2,13 +2,15 @@ import { left, right } from '@/core/either'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { EditAnswerUseCaseRequestDTO } from './dto'
 import { EditAnswerUseCaseResponseDTO } from './dto/edit-answer-response'
-import { NotAllowedError } from './errors/not-allowed-error'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { AnswerAttachment } from '../../enterprise/entities/answer-attachment'
 import { AnswerAttachmentsRepository } from '../repositories/answer-attachments-repository'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { AnswerAttachmentList } from '../../enterprise/entities/answer-attachment-list'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class EditAnswerUseCase {
   constructor(
     private readonly answersRepository: AnswersRepository,

@@ -4,13 +4,15 @@ import {
   EditQuestionUseCaseRequestDTO,
   EditQuestionUseCaseResponseDTO,
 } from './dto'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository'
 import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list'
 import { QuestionAttachment } from '../../enterprise/entities/question-attachment'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class EditQuestionUseCase {
   constructor(
     private readonly questionsRepository: QuestionsRepository,

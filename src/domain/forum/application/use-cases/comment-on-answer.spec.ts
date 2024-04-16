@@ -4,7 +4,7 @@ import { AnswerCommentsRepository } from '../repositories/answer-comments-reposi
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { InMemoryAnswerCommentsRepository } from 'test/repositories/in-memory-answer-comments-repository'
 import { makeAnswer } from 'test/factories/make-answer'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { AnswerAttachmentsRepository } from '../repositories/answer-attachments-repository'
 import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 

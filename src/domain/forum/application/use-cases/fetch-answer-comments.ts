@@ -4,7 +4,9 @@ import {
   FetchAnswerCommentsUseCaseResponseDTO,
 } from './dto'
 import { right } from '@/core/either'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class FetchAnswerCommentsUseCase {
   constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
 

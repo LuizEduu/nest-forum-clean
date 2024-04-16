@@ -3,8 +3,8 @@ import { InMemoryAnswerCommentsRepository } from 'test/repositories/in-memory-an
 import { DeleteAnswerCommentUseCase } from './delete-answer-comment'
 import { AnswerCommentsRepository } from '../repositories/answer-comments-repository'
 import { makeAnswerComment } from 'test/factories/make-answer-comment'
-import { NotAllowedError } from './errors/not-allowed-error'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 
 let inMemoryAnswerCommentsRepository: AnswerCommentsRepository
 let sut: DeleteAnswerCommentUseCase

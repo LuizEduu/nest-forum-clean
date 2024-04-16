@@ -4,7 +4,9 @@ import {
   FetchQuestionAnswersRequestDTO,
   FetchQuestionAnswersResponseDTO,
 } from './dto'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class FetchQuestionAnswersUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
 

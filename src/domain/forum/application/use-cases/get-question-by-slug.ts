@@ -4,9 +4,11 @@ import {
   GetQuestionBySlugUseCaseRequestDTO,
   GetQuestionBySlugUseCaseResponseDTO,
 } from './dto'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
+import { Injectable } from '@nestjs/common'
 
-export class GetQuestionBySlugUseCase {
+@Injectable()
+export default class GetQuestionBySlugUseCase {
   constructor(private readonly questionsRepository: QuestionsRepository) {}
 
   async execute({

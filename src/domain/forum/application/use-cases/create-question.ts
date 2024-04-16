@@ -8,7 +8,9 @@ import { Question } from '../../enterprise/entities/question'
 import { right } from '@/core/either'
 import { QuestionAttachment } from '../../enterprise/entities/question-attachment'
 import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class CreateQuestionUseCase {
   constructor(private readonly questionsRepository: QuestionsRepository) {}
 

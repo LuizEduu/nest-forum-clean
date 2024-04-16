@@ -2,9 +2,11 @@ import { left, right } from '@/core/either'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { DeleteAnswerUseCaseRequestDTO } from './dto/delete-answer-request'
 import { DeleteAnswerUseCaseResponseDTO } from './dto/delete-answer-response'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class DeleteAnswerUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
 

@@ -3,8 +3,8 @@ import { DeleteQuestionCommentUseCase } from '@/domain/forum/application/use-cas
 import { makeQuestionComment } from 'test/factories/make-question-comment'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { QuestionCommentsRepository } from '../repositories/question-comments-repository'
-import { NotAllowedError } from './errors/not-allowed-error'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 
 let inMemoryQuestionCommentsRepository: QuestionCommentsRepository
 let sut: DeleteQuestionCommentUseCase

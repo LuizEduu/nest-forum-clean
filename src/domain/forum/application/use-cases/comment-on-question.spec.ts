@@ -4,7 +4,7 @@ import { QuestionsRepository } from '../repositories/questions-repository'
 import { QuestionCommentsRepository } from '../repositories/question-comments-repository'
 import { CommentOnQuestionUseCase } from './comment-on-question'
 import { makeQuestion } from 'test/factories/make-question'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 

@@ -5,9 +5,11 @@ import {
   ChooseQuestionBestAnswerUseCaseRequestDTO,
   ChooseQuestionBestAnswerUseCaseResponsetDTO,
 } from './dto'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class ChooseQuestionBestAnswerUseCase {
   constructor(
     private readonly questionsRepository: QuestionsRepository,
