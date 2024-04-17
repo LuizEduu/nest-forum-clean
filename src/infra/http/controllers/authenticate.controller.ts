@@ -1,8 +1,14 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
-import { compare } from 'bcryptjs'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { z } from 'zod'
+import { AuthenticateStudentUseCase } from '@/domain/forum/application/use-cases/authenticate-student'
+import { WrongCredentialsError } from '@/domain/forum/application/use-cases/errors/wrong-credentials-error'
+import { Public } from '@/infra/auth/public'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -13,34 +19,30 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
 
 @Controller('/sessions')
 export class SessionsAuthenticateController {
-  constructor(
-    private readonly jwt: JwtService,
-    private readonly prisma: PrismaService,
-  ) {}
+  constructor(private authenticateStudent: AuthenticateStudentUseCase) {}
 
   @Post()
+  @Public()
   async handle(@Body() body: AuthenticateBodySchema) {
     const { email, password } = body
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
+
+    const result = await this.authenticateStudent.execute({
+      email,
+      password,
     })
 
-    if (!user) {
-      throw new UnauthorizedException('User credentials does not match.')
+    if (result.isLeft()) {
+      const error = result.value
+      switch (error.constructor) {
+        case WrongCredentialsError:
+          throw new UnauthorizedException()
+        default:
+          throw new BadRequestException()
+      }
     }
-
-    const isPasswordValid = await compare(password, user.password)
-
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('User credentials does not match.')
-    }
-
-    const accessToken = this.jwt.sign({ sub: user.id })
 
     return {
-      access_token: accessToken,
+      access_token: result.value.accessToken,
     }
   }
 }

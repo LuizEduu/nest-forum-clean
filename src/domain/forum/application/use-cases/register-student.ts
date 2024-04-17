@@ -7,7 +7,9 @@ import {
 import { left, right } from '@/core/either'
 import { StudentAlreadyExistsError } from './errors/student-already-exists-error'
 import { Student } from '../../enterprise/entities/student'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class RegisterStudentUseCase {
   constructor(
     private readonly studentsRepository: StudentsRepository,

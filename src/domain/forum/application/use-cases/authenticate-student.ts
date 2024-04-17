@@ -7,7 +7,9 @@ import { left, right } from '@/core/either'
 import { HashComparer } from '../cryptography/hash-comparer'
 import { Encrypter } from '../cryptography/encrypter'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class AuthenticateStudentUseCase {
   constructor(
     private readonly studentsRepository: StudentsRepository,
