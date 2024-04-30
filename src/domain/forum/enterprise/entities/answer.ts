@@ -70,6 +70,10 @@ export class Answer extends AggregateRoot<AnswerProps> {
     return this.props.updatedAt
   }
 
+  set updatedAt(updatedAt: Date | null | undefined) {
+    this.props.updatedAt = updatedAt
+  }
+
   get excerpt() {
     return this.content.substring(0, 120).trimEnd().concat('...')
   }
