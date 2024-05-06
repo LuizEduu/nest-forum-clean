@@ -2,17 +2,58 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository'
 import { QuestionComment } from '@/domain/forum/enterprise/entities/question-comments'
 import { Injectable } from '@nestjs/common'
+import { PrismaQuestionCommentMapper } from '../mappers/prisma-question-comment-mapper'
+import { PrismaService } from '../prisma.service'
 
 @Injectable()
 export class PrismaQuestionComments implements QuestionCommentsRepository {
-  async create(questionComment: QuestionComment): Promise<void> {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async delete(questionComment: QuestionComment): Promise<void> {}
+  async create(questionComment: QuestionComment): Promise<void> {
+    const data = PrismaQuestionCommentMapper.toPrisma(questionComment)
 
-  async findById(id: string): Promise<QuestionComment | null> {}
+    await this.prismaService.comment.create({
+      data,
+    })
+  }
+
+  async findById(id: string): Promise<QuestionComment | null> {
+    const questionComment = await this.prismaService.comment.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!questionComment) {
+      return null
+    }
+
+    return PrismaQuestionCommentMapper.toDomain(questionComment)
+  }
 
   async findManyByQuestionId(
     questionId: string,
-    params: PaginationParams,
-  ): Promise<QuestionComment[]> {}
+    { page }: PaginationParams,
+  ): Promise<QuestionComment[]> {
+    const questionComments = await this.prismaService.comment.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      where: {
+        questionId,
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return questionComments.map(PrismaQuestionCommentMapper.toDomain)
+  }
+
+  async delete(questionComment: QuestionComment): Promise<void> {
+    await this.prismaService.comment.delete({
+      where: {
+        id: questionComment.id.toString(),
+      },
+    })
+  }
 }
