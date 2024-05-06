@@ -11,7 +11,7 @@ import { EnvModule } from './env/env.module'
   imports: [
     ConfigModule.forRoot({
       validate: (env) => envSchema.parse(env), // faz a validação das envs e retorna um erro caso esteja faltando algo
-      isGlobal: true, // tornar o módulo global para não precisaar configurar nos outros modules
+      isGlobal: true, // tornar o módulo global para não precisar configurar nos outros modules
     }),
     AuthModule,
     HttpModule,

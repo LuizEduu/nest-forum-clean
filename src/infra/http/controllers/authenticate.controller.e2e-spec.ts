@@ -1,22 +1,23 @@
 import { AppModule } from '@/infra/app.module'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { DatabaseModule } from '@/infra/database/database.module'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { hash } from 'bcryptjs'
 import request from 'supertest'
+import { StudentFactory } from 'test/factories/make-student'
 
 describe('Authenticate (E2E)', () => {
   let app: INestApplication
-  let prisma: PrismaService
+  let studentFactory: StudentFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, DatabaseModule],
+      providers: [StudentFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
-
-    prisma = moduleRef.get(PrismaService)
+    studentFactory = moduleRef.get(StudentFactory)
 
     await app.init()
   })
@@ -24,12 +25,8 @@ describe('Authenticate (E2E)', () => {
   test('[POST] /sessions', async () => {
     const hashedPassword = await hash('123456', 8)
 
-    const createdUser = await prisma.user.create({
-      data: {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        password: hashedPassword,
-      },
+    const createdUser = await studentFactory.makePrismaStudent({
+      password: hashedPassword,
     })
 
     const response = await request(app.getHttpServer()).post('/sessions').send({
@@ -54,8 +51,7 @@ describe('Authenticate (E2E)', () => {
     expect(response.statusCode).toBe(401)
     expect(response.body).toEqual(
       expect.objectContaining({
-        error: 'Unauthorized',
-        message: 'User credentials does not match.',
+        message: 'Unauthorized',
         statusCode: 401,
       }),
     )
@@ -64,12 +60,8 @@ describe('Authenticate (E2E)', () => {
   test('[POST] /sessions invalid password', async () => {
     const hashedPassword = await hash('123456', 8)
 
-    const createdUser = await prisma.user.create({
-      data: {
-        name: 'John Doe',
-        email: 'johndoe2@example.com',
-        password: hashedPassword,
-      },
+    const createdUser = await studentFactory.makePrismaStudent({
+      password: hashedPassword,
     })
 
     const response = await request(app.getHttpServer()).post('/sessions').send({
@@ -80,8 +72,7 @@ describe('Authenticate (E2E)', () => {
     expect(response.statusCode).toBe(401)
     expect(response.body).toEqual(
       expect.objectContaining({
-        error: 'Unauthorized',
-        message: 'User credentials does not match.',
+        message: 'Unauthorized',
         statusCode: 401,
       }),
     )

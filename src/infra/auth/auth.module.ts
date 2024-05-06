@@ -9,6 +9,7 @@ import { EnvModule } from '../env/env.module'
 
 @Module({
   imports: [
+    EnvModule,
     PassportModule,
     JwtModule.registerAsync({
       global: true,
