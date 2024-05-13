@@ -15,14 +15,14 @@ export class AnswerQuestionUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
 
   async execute({
-    instructorId,
+    authorId,
     questionId,
     content,
     attachmentsIds,
   }: AnserQuestionUseCaseRequestDTO): Promise<AnserQuestionUseCaseResponseDTO> {
     const answer = Answer.create({
       content,
-      authorId: new UniqueEntityID(instructorId),
+      authorId: new UniqueEntityID(authorId),
       questionId: new UniqueEntityID(questionId),
     })
 

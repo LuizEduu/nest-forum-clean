@@ -4,6 +4,8 @@ import {
   QuestionComment,
   QuestionCommentProps,
 } from '@/domain/forum/enterprise/entities/question-comments'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { PrismaQuestionCommentMapper } from '@/infra/database/prisma/mappers/prisma-question-comment-mapper'
 
 /**
  * @property {UniqueEntityID} authorId - id do autor da pergunta.
@@ -29,4 +31,18 @@ export function makeQuestionComment(
     },
     id,
   )
+}
+
+export class QuestionCommentFactory {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async makePrismaQuestionComment(data: Partial<QuestionCommentProps> = {}) {
+    const questionComment = makeQuestionComment(data)
+
+    await this.prismaService.comment.create({
+      data: PrismaQuestionCommentMapper.toPrisma(questionComment),
+    })
+
+    return questionComment
+  }
 }

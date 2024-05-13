@@ -1,5 +1,5 @@
 export interface AnserQuestionUseCaseRequestDTO {
-  instructorId: string
+  authorId: string
   questionId: string
   content: string
   attachmentsIds: string[]
