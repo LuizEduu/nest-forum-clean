@@ -7,6 +7,7 @@ import {
 } from '@/domain/forum/enterprise/entities/answer-comments'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { PrismaAnswerCommentMapper } from '@/infra/database/prisma/mappers/prisma-answer-comment-mapper'
+import { Injectable } from '@nestjs/common'
 
 /**
  * @property {UniqueEntityID} authorId - id do autor da pergunta.
@@ -34,6 +35,7 @@ export function makeAnswerComment(
   )
 }
 
+@Injectable()
 export class AnswerCommentFactory {
   constructor(private readonly prismaService: PrismaService) {}
 

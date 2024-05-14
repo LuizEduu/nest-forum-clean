@@ -35,6 +35,9 @@ import { FetchQuestionCommentsUseCase } from '@/domain/forum/application/use-cas
 import { FetchAnswerCommentsController } from './controllers/fetch-answer-comments.controller'
 import { FetchAnswerCommentsUseCase } from '@/domain/forum/application/use-cases/fetch-answer-comments'
 import { CommentOnAnswerUseCase } from '@/domain/forum/application/use-cases/comment-on-answer'
+import { UploadAttachmentController } from './controllers/upload-attachment.controller'
+import { DeleteQuestionCommentController } from './controllers/delete-question-comment.controller'
+import { DeleteQuestionCommentUseCase } from '@/domain/forum/application/use-cases/delete-question-comment'
 
 @Module({
   controllers: [
@@ -52,9 +55,11 @@ import { CommentOnAnswerUseCase } from '@/domain/forum/application/use-cases/com
     ChooseQuestionBestAnswerController,
     CommentOnQuestionController,
     CommentOnAnswerController,
+    DeleteQuestionCommentController,
     DeleteAnswerCommentController,
     FetchQuestionCommentsController,
     FetchAnswerCommentsController,
+    UploadAttachmentController,
   ],
   providers: [
     CreateQuestionUseCase,
@@ -66,6 +71,7 @@ import { CommentOnAnswerUseCase } from '@/domain/forum/application/use-cases/com
     DeleteQuestionUseCase,
     AnswerQuestionUseCase,
     EditAnswerUseCase,
+    DeleteQuestionCommentUseCase,
     DeleteAnswerUseCase,
     FetchQuestionAnswersUseCase,
     ChooseQuestionBestAnswerUseCase,
