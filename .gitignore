@@ -60,6 +60,7 @@ data
 
 #Env
 .env
+.env.test
 
 #keys
 chave_privada.pem
