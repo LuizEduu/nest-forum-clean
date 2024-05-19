@@ -1,3 +1,4 @@
+import { UploadAndAttachmentUseCase } from '@/domain/forum/application/use-cases/upload-and-create-attachment'
 import {
   Controller,
   FileTypeValidator,
@@ -12,6 +13,10 @@ import { FileInterceptor } from '@nestjs/platform-express'
 
 @Controller('/attachments')
 export class UploadAttachmentController {
+  constructor(
+    private readonly uploadAndAttachmentUseCase: UploadAndAttachmentUseCase,
+  ) {}
+
   @Post()
   @HttpCode(201)
   @UseInterceptors(FileInterceptor('file'))
@@ -25,5 +30,13 @@ export class UploadAttachmentController {
       }),
     )
     file: Express.Multer.File,
-  ) {}
+  ) {
+    const attachment = await this.uploadAndAttachmentUseCase.execute({
+      fileName: file.filename,
+      body: file.buffer,
+      fileType: file.mimetype,
+    })
+
+    return attachment
+  }
 }
