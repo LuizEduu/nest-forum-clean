@@ -6,14 +6,12 @@ import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class PrismaAttachmentsRepository implements AttachmentsRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(attachment: Attachment): Promise<void> {
     const data = PrismaAttachmentMapper.toPrisma(attachment)
 
-    console.log(data)
-
-    await this.prismaService.attachment.create({
+    await this.prisma.attachment.create({
       data,
     })
   }

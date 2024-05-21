@@ -2,10 +2,9 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { CreateQuestionUseCase } from './create-question'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
-import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
-let inMemoryQuestionAttachmentsRepository: QuestionAttachmentsRepository
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: QuestionsRepository
 let sut: CreateQuestionUseCase
 
@@ -45,5 +44,29 @@ describe('Create Question Use Case', () => {
         }),
       ])
     }
+  })
+
+  it('shoud persist attachments when creating a new question', async () => {
+    const result = await sut.execute({
+      authorId: '1',
+      content: 'nova questão',
+      title: 'Nova questão title',
+      attachmentsIds: ['1', '2'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(
+      inMemoryQuestionAttachmentsRepository.questionAttachments,
+    ).toHaveLength(2)
+    expect(inMemoryQuestionAttachmentsRepository.questionAttachments).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('1'),
+        }),
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('2'),
+        }),
+      ]),
+    )
   })
 })

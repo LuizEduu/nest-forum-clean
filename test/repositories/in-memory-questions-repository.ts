@@ -14,6 +14,28 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
   async create(question: Question) {
     this.questions.push(question)
 
+    await this.inMemoryQuestionAttachmentsRepository.createMany(
+      question.attachments.getItems(),
+    )
+
+    DomainEvents.dispatchEventsForAggregate(question.id)
+  }
+
+  async save(question: Question) {
+    const index = this.questions.findIndex(
+      (item) => item.id.toString() === question.id.toString(),
+    )
+
+    await this.inMemoryQuestionAttachmentsRepository.createMany(
+      question.attachments.getNewItems(),
+    )
+
+    await this.inMemoryQuestionAttachmentsRepository.deleteMany(
+      question.attachments.getRemovedItems(),
+    )
+
+    this.questions[index] = question
+
     DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
@@ -41,16 +63,6 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     this.inMemoryQuestionAttachmentsRepository.deleteManyByQuestionId(
       question.id.toString(),
     )
-  }
-
-  async save(question: Question) {
-    const index = this.questions.findIndex(
-      (item) => item.id.toString() === question.id.toString(),
-    )
-
-    this.questions[index] = question
-
-    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async findManyRecent({ page }: PaginationParams): Promise<Question[]> {

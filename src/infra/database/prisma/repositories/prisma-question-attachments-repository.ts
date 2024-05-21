@@ -8,12 +8,21 @@ import { PrismaQuestionAttachmentMapper } from '../mappers/prisma-question-attac
 export class PrismaQuestionAttachmentsRepository
   implements QuestionAttachmentsRepository
 {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
+  async createMany(attachments: QuestionAttachment[]): Promise<void> {
+    if (!attachments.length) {
+      return
+    }
+
+    const data = PrismaQuestionAttachmentMapper.toPrismaUpdateMany(attachments)
+
+    await this.prisma.attachment.updateMany(data)
+  }
 
   async findManyByQuestionId(
     questionId: string,
   ): Promise<QuestionAttachment[]> {
-    const questionAttachments = await this.prismaService.attachment.findMany({
+    const questionAttachments = await this.prisma.attachment.findMany({
       where: {
         questionId,
       },
@@ -22,8 +31,24 @@ export class PrismaQuestionAttachmentsRepository
     return questionAttachments.map(PrismaQuestionAttachmentMapper.toDomain)
   }
 
+  async deleteMany(attachments: QuestionAttachment[]): Promise<void> {
+    if (!attachments.length) {
+      return
+    }
+
+    const attachmentsIds = attachments.map((at) => at.id.toString())
+
+    await this.prisma.attachment.deleteMany({
+      where: {
+        id: {
+          in: attachmentsIds,
+        },
+      },
+    })
+  }
+
   async deleteManyByQuestionId(questionId: string): Promise<void> {
-    await this.prismaService.attachment.deleteMany({
+    await this.prisma.attachment.deleteMany({
       where: {
         questionId,
       },
