@@ -2,7 +2,7 @@ import { StudentsRepository } from '@/domain/forum/application/repositories/stud
 import { Student } from '@/domain/forum/enterprise/entities/student'
 
 export class InMemoryStudentsRepository implements StudentsRepository {
-  private students: Student[] = []
+  public students: Student[] = []
 
   async create(student: Student): Promise<void> {
     this.students.push(student)

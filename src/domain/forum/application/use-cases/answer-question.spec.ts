@@ -96,7 +96,7 @@ describe('Answer Question Use Case', () => {
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryAnswerAttachmentsRepository.answerAttachments).toHaveLength(
-      2,
+      4,
     )
     expect(inMemoryAnswerAttachmentsRepository.answerAttachments).toEqual(
       expect.arrayContaining([
