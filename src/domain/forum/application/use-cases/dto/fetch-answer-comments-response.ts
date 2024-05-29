@@ -1,9 +1,9 @@
 import { Either } from '@/core/either'
-import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comments'
+import { CommentWithAuthor } from '@/domain/forum/enterprise/entities/value-objects/comment-with-author'
 
 export type FetchAnswerCommentsUseCaseResponseDTO = Either<
   null,
   {
-    answerComments: AnswerComment[]
+    comments: CommentWithAuthor[]
   }
 >

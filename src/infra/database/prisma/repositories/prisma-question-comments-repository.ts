@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaQuestionCommentMapper } from '../mappers/prisma-question-comment-mapper'
 import { PrismaService } from '../prisma.service'
 import { CommentWithAuthor } from '@/domain/forum/enterprise/entities/value-objects/comment-with-author'
-import { PrismaQuestionCommentWithAuthorMapper } from '../mappers/prisma-comment-with-author-mapper'
+import { PrismaCommentWithAuthorMapper } from '../mappers/prisma-comment-with-author-mapper'
 
 @Injectable()
 export class PrismaQuestionComments implements QuestionCommentsRepository {
@@ -69,7 +69,7 @@ export class PrismaQuestionComments implements QuestionCommentsRepository {
       skip: (page - 1) * 20,
     })
 
-    return questionComments.map(PrismaQuestionCommentWithAuthorMapper.toDomain)
+    return questionComments.map(PrismaCommentWithAuthorMapper.toDomain)
   }
 
   async delete(questionComment: QuestionComment): Promise<void> {
