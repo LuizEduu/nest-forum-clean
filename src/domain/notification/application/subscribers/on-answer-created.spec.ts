@@ -19,37 +19,46 @@ import {
   SendNotificationUseCaseResponseDTO,
 } from '../use-cases/dto'
 import { waitFor } from 'test/utils/wait-for'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 
 let inMemoryAnswerAttachmentsRepository: AnswerAttachmentsRepository
 let inMemoryAnswersRepository: AnswersRepository
-let inMemoryQuestionAttachmentsRepository: QuestionAttachmentsRepository
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: QuestionsRepository
 let inMemoryNotificationsRepository: NotificationsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
 let sendNotificationUseCase: SendNotificationUseCase
-let onAnswerCreated: OnAnswerCreated
 
 let sendNotificationUseCaseExecuteSpy: MockInstance<
   [SendNotificationUseCaseRequestDTO],
   Promise<SendNotificationUseCaseResponseDTO>
 >
 
+let onAnswerCreated: OnAnswerCreated
+
 describe('on answer created', () => {
   beforeEach(() => {
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
+
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
+    )
+
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+
     inMemoryAnswerAttachmentsRepository =
       new InMemoryAnswerAttachmentsRepository()
 
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
       inMemoryAnswerAttachmentsRepository,
     )
-
-    inMemoryQuestionAttachmentsRepository =
-      new InMemoryQuestionAttachmentsRepository()
-
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionAttachmentsRepository,
-    )
-
-    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
 
     sendNotificationUseCase = new SendNotificationUseCase(
       inMemoryNotificationsRepository,

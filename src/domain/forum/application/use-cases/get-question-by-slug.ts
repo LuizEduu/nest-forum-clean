@@ -14,7 +14,7 @@ export default class GetQuestionBySlugUseCase {
   async execute({
     slug,
   }: GetQuestionBySlugUseCaseRequestDTO): Promise<GetQuestionBySlugUseCaseResponseDTO> {
-    const question = await this.questionsRepository.findBySlug(slug)
+    const question = await this.questionsRepository.findDetailsBySlug(slug)
 
     if (!question) {
       return left(new ResourceNotFoundError())

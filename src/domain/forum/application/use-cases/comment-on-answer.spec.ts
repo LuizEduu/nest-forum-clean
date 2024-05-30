@@ -7,10 +7,13 @@ import { makeAnswer } from 'test/factories/make-answer'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { AnswerAttachmentsRepository } from '../repositories/answer-attachments-repository'
 import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 
 let inMemoryAnswerAttachmentsRepository: AnswerAttachmentsRepository
 let inMemoryAnswersRepository: AnswersRepository
 let inMemoryAnswerCommentsRepository: AnswerCommentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
+
 let sut: CommentOnAnswerUseCase
 
 describe('CommentOnAnswer Use Case', () => {
@@ -20,7 +23,11 @@ describe('CommentOnAnswer Use Case', () => {
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
       inMemoryAnswerAttachmentsRepository,
     )
-    inMemoryAnswerCommentsRepository = new InMemoryAnswerCommentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+
+    inMemoryAnswerCommentsRepository = new InMemoryAnswerCommentsRepository(
+      inMemoryStudentsRepository,
+    )
 
     sut = new CommentOnAnswerUseCase(
       inMemoryAnswersRepository,

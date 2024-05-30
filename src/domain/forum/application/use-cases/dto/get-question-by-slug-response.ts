@@ -1,10 +1,10 @@
 import { Either } from '@/core/either'
-import { Question } from '@/domain/forum/enterprise/entities/question'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
+import { QuestionDetails } from '@/domain/forum/enterprise/entities/value-objects/question-details'
 
 export type GetQuestionBySlugUseCaseResponseDTO = Either<
   ResourceNotFoundError,
   {
-    question: Question
+    question: QuestionDetails
   }
 >

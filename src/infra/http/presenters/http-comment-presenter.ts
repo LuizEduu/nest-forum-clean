@@ -1,6 +1,6 @@
 import { Comment } from '@/domain/forum/enterprise/entities/comment'
 
-export class CommentPresenter {
+export class HttpCommentPresenter {
   static toHTTP(comment: Comment<any>) {
     return {
       id: comment.id.toString(),
