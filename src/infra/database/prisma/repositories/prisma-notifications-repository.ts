@@ -5,9 +5,7 @@ import { PrismaService } from '../prisma.service'
 import { PrismaNotificationMapper } from '../mappers/prisma-notification-mapper'
 
 @Injectable()
-export class PrismaSendNotificationsRepository
-  implements NotificationsRepository
-{
+export class PrismaNotificationsRepository implements NotificationsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(notification: Notification): Promise<void> {
