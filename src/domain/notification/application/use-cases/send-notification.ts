@@ -4,7 +4,9 @@ import { SendNotificationUseCaseResponseDTO } from './dto/send-notification-resp
 import { Notification } from '../../enterprise/entities/notification'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { NotificationsRepository } from '../repositories/notifications-repository'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class SendNotificationUseCase {
   constructor(
     private readonly notificationsRepository: NotificationsRepository,
