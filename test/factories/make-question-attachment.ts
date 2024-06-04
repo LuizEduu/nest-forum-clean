@@ -29,7 +29,7 @@ export function makeQuestionAttachment(
 export class QuestionAttachmentFactory {
   constructor(private readonly prisma: PrismaService) {}
 
-  async makePrismaQuestionAttachmentFactory(
+  async makePrismaQuestionAttachment(
     data: Partial<QuestionAttachmentProps> = {},
   ) {
     const questionAttachment = makeQuestionAttachment(data)
